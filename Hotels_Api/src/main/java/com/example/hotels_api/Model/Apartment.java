@@ -2,7 +2,6 @@ package com.example.hotels_api.Model;
 
 
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -10,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Entity
 @Setter
@@ -42,12 +43,9 @@ public class Apartment {
 
     @NotNull
     @Column(columnDefinition = "int not null")
-    private Double price;
+    private Double pricePerDay;
 
 
-
-
-
-
-
+    @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL)
+    private Set<Order1> orders;
 }
