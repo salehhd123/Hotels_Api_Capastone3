@@ -3,6 +3,7 @@ package com.example.hotels_api.Controller;
 import com.example.hotels_api.Api.ApiResponse;
 import com.example.hotels_api.Model.Customer;
 import com.example.hotels_api.Service.CustomerService;
+import com.example.hotels_api.Service.Order1Service;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/customer")
 public class CustomerController {
     private final CustomerService customerService;
+    private final Order1Service order1Service;
 
     @GetMapping("/get")
     public ResponseEntity getAllCustomers(){
@@ -35,5 +37,17 @@ public class CustomerController {
     public ResponseEntity deleteTeacher(@PathVariable Integer id) {
         customerService.deleteCustomer(id);
         return ResponseEntity.status(200).body("Teacher deleted successfully");
+    }
+
+    @GetMapping("/get-customer-orders/{customerId}")
+    public ResponseEntity getOrdersForCustomer(@PathVariable Integer customerId) {
+        return ResponseEntity.status(200).body(order1Service.getOrdersByCustomerId(customerId));
+    }
+
+
+    @PutMapping("/{customerId}/orders/{orderId}/cancel")
+    public ResponseEntity<String> cancelOrder(@PathVariable Integer customerId, @PathVariable Integer orderId) {
+        order1Service.cancelOrder(customerId, orderId);
+        return ResponseEntity.status(200).body("Order with ID " + orderId + " has been canceled.");
     }
 }

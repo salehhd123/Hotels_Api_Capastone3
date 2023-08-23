@@ -3,10 +3,10 @@ package com.example.hotels_api.Service;
 import com.example.hotels_api.Api.ApiExeption;
 import com.example.hotels_api.Model.Customer;
 import com.example.hotels_api.Model.Order1;
+import com.example.hotels_api.Model.OrderStatus;
 import com.example.hotels_api.Repository.CustomerRepository;
 import com.example.hotels_api.Repository.Order1Repository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -34,6 +34,8 @@ public class Order1Service {
     public void addOrder(Order1 order) {
         LocalDate endDate = order.getCreatedAt().plusDays(order.getNumberOfDays());
         order.setEndDate(endDate);
+        // Set the initial status to PENDING
+        order.setStatus(OrderStatus.PENDING);
         order1Repository.save(order);
     }
 
@@ -59,5 +61,27 @@ public class Order1Service {
         }
         order1.setCustomer(customer);
         order1Repository.save(order1);
+    }
+
+    public List<Order1> getOrdersByCustomerId(Integer customerId) {
+        return order1Repository.findOrdersByCustomerId(customerId);
+    }
+
+
+    public void cancelOrder(Integer customerId, Integer orderId) {
+        Order1 order = order1Repository.findOrder1ById(orderId);
+        if (order == null) {
+            throw new ApiExeption("Order with ID " + orderId + " not found");
+        }
+        if (order.getCustomer() == null) {
+            throw new ApiExeption("Order with ID " + orderId + " does not have an associated customer");
+        }
+        if (order == null || !order.getCustomer().getId().equals(customerId)) {
+            throw new ApiExeption("Order with ID " + orderId + " not found or not associated with the customer.");
+        }
+
+        // Implement logic to update order status to "Canceled" and perform any other necessary actions.
+        order.setStatus(OrderStatus.CANCELED);
+        order1Repository.save(order);
     }
 }

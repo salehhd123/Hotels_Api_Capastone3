@@ -44,6 +44,10 @@ public class Order1 {
     @Column(columnDefinition = "DATE not null")
     private LocalDate endDate;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private OrderStatus status;
+
     @ManyToOne
     @JoinColumn(name = "customer_id",referencedColumnName = "id")
     @JsonIgnore
