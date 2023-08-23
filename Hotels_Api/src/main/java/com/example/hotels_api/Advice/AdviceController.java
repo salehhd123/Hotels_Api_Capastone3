@@ -1,6 +1,6 @@
 package com.example.hotels_api.Advice;
 
-import com.example.hotels_api.Api.ApiExeption;
+import com.example.hotels_api.Api.ApiException;
 import com.example.hotels_api.Api.ApiResponse;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,8 +20,8 @@ public class AdviceController {
 
 
     // Our Exception
-    @ExceptionHandler(value = ApiExeption.class)
-    public ResponseEntity ApiExeption(ApiExeption e){
+    @ExceptionHandler(value = ApiException.class)
+    public ResponseEntity ApiExeption(ApiException e){
         String message=e.getMessage();
         return ResponseEntity.status(400).body(message);
     }

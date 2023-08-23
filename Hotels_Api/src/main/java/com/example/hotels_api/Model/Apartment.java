@@ -43,7 +43,7 @@ public class Apartment {
 
     @NotNull
     @Column(columnDefinition = "int not null")
-    private Double price;
+    private Double pricePerDay;
 
 
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL)

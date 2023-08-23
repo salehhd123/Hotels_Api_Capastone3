@@ -1,25 +1,16 @@
-package com.example.hotels_api.Model;
+package com.example.hotels_api.Dto;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Entity
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
-@NoArgsConstructor
-public class Branch {
-    @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class BranchDto {
 
+    private Integer hotels_id;
 
     @NotEmpty(message = "can not be empty !")
     @Column(columnDefinition = "varchar(20) not null")
@@ -38,10 +29,4 @@ public class Branch {
     @Size(min = 9,max = 9,message = "must be 9 digits")
     @Column(columnDefinition = "varchar(9) not null")
     private String phone_number;
-
-    @ManyToOne
-    @JoinColumn(name = "hotels_id",referencedColumnName = "id")
-    @JsonIgnore
-    private Hotels hotels;
 }
-

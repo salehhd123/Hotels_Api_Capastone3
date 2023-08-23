@@ -1,6 +1,6 @@
 package com.example.hotels_api.Service;
 
-import com.example.hotels_api.Api.ApiExeption;
+import com.example.hotels_api.Api.ApiException;
 import com.example.hotels_api.Model.Customer;
 import com.example.hotels_api.Repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class CustomerService {
     public void updateCustomer(Integer id,Customer customer){
             Customer customer1=customerRepository.findCustomerById(id);
             if (customer1==null){
-                throw new ApiExeption("ID Not Found");
+                throw new ApiException("ID Not Found");
             }
         customer1.setFirstName(customer.getFirstName());
         customer1.setLastName(customer.getLastName());

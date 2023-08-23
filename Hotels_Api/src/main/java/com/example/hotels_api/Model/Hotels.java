@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Setter
 @Getter
@@ -22,4 +24,7 @@ public class Hotels {
     @NotEmpty(message = "can not be empty !")
     @Column(columnDefinition = "varchar(20) not null")
     private String name;
+
+    @OneToMany(cascade = CascadeType.DETACH,mappedBy = "hotels")
+    private Set<Branch> branches;
 }

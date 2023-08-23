@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HotelsRepository extends JpaRepository<Hotels,Integer> {
+
+    Hotels findHotelById(Integer id);
 }

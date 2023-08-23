@@ -1,6 +1,6 @@
 package com.example.hotels_api.Service;
 
-import com.example.hotels_api.Api.ApiExeption;
+import com.example.hotels_api.Api.ApiException;
 import com.example.hotels_api.Model.Customer;
 import com.example.hotels_api.Model.Order1;
 import com.example.hotels_api.Model.OrderStatus;
@@ -26,7 +26,7 @@ public class Order1Service {
     public Order1 getOrderById(Integer id) {
         Order1 order1=order1Repository.findOrder1ById(id);
         if (order1 == null) {
-            throw new ApiExeption("ID Not Found");
+            throw new ApiException("ID Not Found");
         }
         return order1Repository.findOrder1ById(id);
     }
@@ -42,7 +42,7 @@ public class Order1Service {
     public void updateOrder(Integer id, Order1 order) {
         Order1 order1=order1Repository.findOrder1ById(id);
         if (order1==null) {
-            throw new ApiExeption("Order with ID " + id + " not found");
+            throw new ApiException("Order with ID " + id + " not found");
         }
         order.setNumberOfDays(order1.getNumberOfDays());
         order1Repository.save(order);
@@ -57,7 +57,7 @@ public class Order1Service {
         Order1 order1=order1Repository.findOrder1ById(orderId);
 
         if(customer ==null || order1==null){
-            throw new ApiExeption("Can't assign orderId or customerId invalid");
+            throw new ApiException("Can't assign orderId or customerId invalid");
         }
         order1.setCustomer(customer);
         order1Repository.save(order1);
@@ -71,13 +71,13 @@ public class Order1Service {
     public void cancelOrder(Integer customerId, Integer orderId) {
         Order1 order = order1Repository.findOrder1ById(orderId);
         if (order == null) {
-            throw new ApiExeption("Order with ID " + orderId + " not found");
+            throw new ApiException("Order with ID " + orderId + " not found");
         }
         if (order.getCustomer() == null) {
-            throw new ApiExeption("Order with ID " + orderId + " does not have an associated customer");
+            throw new ApiException("Order with ID " + orderId + " does not have an associated customer");
         }
         if (order == null || !order.getCustomer().getId().equals(customerId)) {
-            throw new ApiExeption("Order with ID " + orderId + " not found or not associated with the customer.");
+            throw new ApiException("Order with ID " + orderId + " not found or not associated with the customer.");
         }
 
         // Implement logic to update order status to "Canceled" and perform any other necessary actions.
